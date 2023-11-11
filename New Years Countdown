@@ -2,4 +2,4 @@
 for seconds in range(10,0,-1):
     print(seconds)
     time.sleep(1) #this adds a delay in the execution so it's like a timer
-print("Happy New Year!")
+print("Happy New Year!") 
