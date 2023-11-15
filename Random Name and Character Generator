@@ -1,4 +1,4 @@
-# This program generates the name of a Knight, their Coat of Arms, Weapon of Choice, and where they live for two players/users. 
+# This program generates the name of a Knight, their Coat of Arms, Character Traits, Weapon of Choice, and where they live for two players/users. 
 
 import random
 
