@@ -1,0 +1,84 @@
+# This program generates the name of a Knight, their Coat of Arms, Weapon of Choice, and where they live for two players/users. 
+
+import random
+
+# Random Name Generator Function
+
+def knightNameGenerator():
+    firstnames = ["Lancelot", "Charles", "Henry", "William", "James", "Richard", "Edward"]
+    nicknames = ["Brave", "Horrific", "Courageous", "Terrific", "Fair", "Conqueror", "Victorious", "Glorious",
+                 "Invicible"]
+    # Randomly pick one first name and nickname
+    firstname = random.choice(firstnames)
+    nickname = random.choice(nicknames)
+    # Generate a random Knight name
+    return firstname + " The " + nickname
+
+# Coat of Arms Generator
+
+def generateCoatofArms():
+    colors1 = ["Red", "Golden", "Blue", "Purple", "White", "Silver"]
+    colors2 = ["Red", "Golden", "Blue", "Purple", "White", "Silver"]
+    animals = ["Lion", "Dragon", "Unicorn", "Horse", "Tiger"]
+    # Randomly choose two colors and an animal
+    color1 = random.choice(colors1)
+    color2 = random.choice(colors2)
+    animal = random.choice(animals)
+
+    # This makes sure unique colors are randomly chosen.
+    if color1 == color2:
+        return color1 + " " + animal
+    else:
+        return color1 + " and " + color2 + " " + animal
+
+# Randomly generate a favorite weapon
+
+def generateWeapon():
+    weapons = ["iron mace", "golden flail", "silver axe", "silver sword", "wooden shield"]
+    # Randomly pick a weapon
+    weapon = random.choice(weapons)
+    # Vowel sensitive output
+    if weapon[0] in ('a','e','i','o','u'):
+        return "Your favorite weapon is an " + weapon
+    else:
+        return "Your favorite weapon is a " + weapon
+
+# Randomly generates a character trait
+
+def characterTrait():
+    characters = ["loyal", "combative", "honorable", "just", "courageous"]
+    # Randomly pick a random character trait
+    character1 = random.choice(characters)
+    character2 = random.choice(characters)
+    if character1 == character2:
+        return "You are " + character1
+    else:
+        return "You are " + character1 + " and " + character2
+
+
+# Randomly generate where the knight lives
+
+def livingSpace():
+    places = ["haunted castle","hidden mansion","fortified tower","manor","monastery"]
+    # Randomly pick a living place
+    place = random.choice(places)
+    return "You live in a " + place
+
+
+###### Main Code begins here ######
+
+player1 = knightNameGenerator()
+coat_of_arms1 = generateCoatofArms()
+print("Player 1: Your name is " + player1)
+print("Your coat of arms is a " + coat_of_arms1)
+print(generateWeapon())
+print(characterTrait())
+print(livingSpace(), "\n")
+
+player2 = knightNameGenerator()
+coat_of_arms2 = generateCoatofArms()
+print("Player 2: Your name is " + player2)
+print("Your coat of arms is a " + coat_of_arms2)
+print(generateWeapon())
+print(characterTrait())
+print(livingSpace())
