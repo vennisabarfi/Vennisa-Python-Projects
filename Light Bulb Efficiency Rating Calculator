@@ -1,0 +1,41 @@
+# This program calculates the energy rating of different bulbs.
+
+# This functions calculates the efficiency ratio of the bulb.
+def efficiencyRatio():
+    # Calculating efficiency ratio
+    ratio = int(light_output/power_consump)
+    # List of Energy Ratings
+    if ratio >= 210:
+        print("Your Energy ratio is: " +str(ratio))
+        print("Energy rating of bulb is A")
+    if ratio >= 185 and ratio < 210:
+        print("Your Energy ratio is: " + str(ratio))
+        print("Energy rating of bulb is B")
+    if ratio >= 160 and ratio < 185:
+        print("Your Energy ratio is: " + str(ratio))
+        print("Energy rating of bulb is C")
+    if ratio >= 135 and ratio < 160:
+        print("Your Energy ratio is: " + str(ratio))
+        print("Energy rating of bulb is D")
+    if ratio >= 110 and ratio < 135:
+        print("Your Energy ratio is: " + str(ratio))
+        print("Energy rating of bulb is E")
+    if ratio >= 85 and ratio < 110:
+        print("Your Energy ratio is: " + str(ratio))
+        print("Energy rating of bulb is F")
+    if ratio < 85:
+        print("Your Energy ratio is: " + str(ratio))
+        print("Energy rating of bulb is E")
+    # Test Cases
+    # If user divides by zero
+    if power_consump == 0:
+        print("Bulb Power Consumption should be greater than zero.")
+    # If user inputs a negative number
+    if power_consump < 0 or light_output < 0:
+        print("Bulb Power Consumption and Light Output value (s) should be greater than zero")
+
+##### Main Program Starts Here ######
+# Receive user inputs on the bulb light output and power consumption
+light_output = float(input(("Enter the light output in lumens: ")))
+power_consump = float(input(("Enter the bulb power consumption over 1000h: ")))
+efficiencyRatio() 
