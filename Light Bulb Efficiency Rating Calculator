@@ -1,4 +1,4 @@
-# This program calculates the energy rating of different bulbs.
+# This program calculates the energy rating of different bulbs. 
 
 # This functions calculates the efficiency ratio of the bulb.
 def efficiencyRatio():
