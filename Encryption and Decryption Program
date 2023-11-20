@@ -1,0 +1,79 @@
+# This Python program encrypts and decrypts messages from a user
+
+import random, time
+
+# Encryption Algorithm
+def encrypt(plaintext, key): 
+    alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    ciphertext = ""
+    for i in range(0, len(plaintext)):
+        character = plaintext[i]
+        ciphertext = ciphertext + character
+        for j in range(0, key):
+            ciphertext = ciphertext + random.choice(alphabet)
+    return ciphertext
+
+# Decryption Algorithm
+def decrypt(ciphertext,key):
+    encoded = []
+    # Each value from plaintext is placed on the key+1th position of cipher text.
+    for i in range(len(ciphertext)):
+        if i % (key+1) == 0:
+            encoded.append(i)
+        else:
+            pass
+    for j in encoded:  # return "encoded" values into string to be printed
+        print(ciphertext[j], end="")
+
+#### Main Program Starts Here ####
+
+plaintext = input("Enter a message to encrypt (plaintext): ")
+key = int(input("Input a key as a number between 1 and 10: "))
+# Test case if user inputs key outside of range
+while not (key >= 1 and key <= 10):
+    print("Invalid key, try again!")
+    key = int(input("Input a key as a number between 1 and 10"))
+
+
+# Encrypting process for user
+print("...")
+time.sleep(1)
+print("Encrypting plaintext...")
+time.sleep(1)
+print("...")
+time.sleep(1)
+ciphertext = encrypt(plaintext, key)
+
+# Output
+print("Encrypted Message: ")
+print(ciphertext)
+
+# Check if user wants to decrypt message. If not, end program.
+user_input = input("Would you like to decrypt a message?" + "\n" + "Enter Y/N: ")
+if user_input == "Y":
+    pass
+else:
+    print("That's alright. Keep the message safe!")
+    quit()
+
+# Receive and store encrypted message and key from user
+crypt_input = input("Enter encrypted message here (ciphertext): ")
+key_input = int(input("Enter key here: "))
+
+# Decrypting message for user
+print("...")
+time.sleep(1)
+print("Decrypting ciphertext...")
+time.sleep(1)
+print("...")
+time.sleep(1)
+
+print("Decrypted message: ")
+decrypt(crypt_input,key_input)
+
+
+
+
+
+
+
