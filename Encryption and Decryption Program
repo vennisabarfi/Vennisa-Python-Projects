@@ -53,7 +53,7 @@ user_input = input("Would you like to decrypt a message?" + "\n" + "Enter Y/N: "
 if user_input == "Y":
     pass
 else:
-    print("That's alright. Keep the message safe!")
+    print("Bye, loser. Sucks for you!")
     quit()
 
 # Receive and store encrypted message and key from user
