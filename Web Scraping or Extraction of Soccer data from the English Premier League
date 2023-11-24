@@ -4,6 +4,7 @@ import requests
 from bs4 import BeautifulSoup
 
 ## Extract soccer stats from the English Premier League official player stats website
+
 def get_premier_league_stats():
     url = "https://www.premierleague.com/stats"
     response = requests.get(url)
@@ -13,16 +14,31 @@ def get_premier_league_stats():
         
         player_stats = []
         player_elements = soup.select('.statsTable tbody tr')
-        
-# Extract specific data for players and goals scored
+
+# Key soccer stats to analyze are extracted below:
 
         for player_element in player_elements:
+# Name of player and number of goals scored. This will focus more on strikers.
+
             player_name = player_element.select_one('.playerName').text.strip()
-            goals_scored = player_element.select_one('.mainStat').text.strip()
+            goals_scored = int(player_element.select_one('.mainStat').text.strip())
+
+# Number of assists. This is key for analyzing midfielder data
+            assists = int(player_element.select_one('.allStatContainer .allStatContainer span[data-stat="assists"]').text.strip())
+
+# Data below is more defensive-centric           
+
+            clean_sheets = int(player_element.select_one('.allStatContainer .allStatContainer span[data-stat="clean_sheet"]').text.strip())
+            yellow_cards = int(player_element.select_one('.allStatContainer .allStatContainer span[data-stat="yellow_card"]').text.strip())
+            red_cards = int(player_element.select_one('.allStatContainer .allStatContainer span[data-stat="red_card"]').text.strip())
 
             player_stats.append({
                 'player_name': player_name,
-                'goals_scored': goals_scored
+                'goals_scored': goals_scored,
+                'assists': assists,
+                'clean_sheets': clean_sheets,
+                'yellow_cards': yellow_cards,
+                'red_cards': red_cards
             })
 
         return player_stats
@@ -30,9 +46,43 @@ def get_premier_league_stats():
         print(f"Failed to retrieve data. Status code: {response.status_code}")
         return None
 
+# Now analyze the data below. This prints the data out to be analyzed.
+
+def analyze_player_stats(player_stats):
+    if not player_stats:
+        return
+
+    total_goals = sum(player['goals_scored'] for player in player_stats)
+    average_goals_per_player = total_goals / len(player_stats)
+
+    max_goals_player = max(player_stats, key=lambda x: x['goals_scored'])
+    min_goals_player = min(player_stats, key=lambda x: x['goals_scored'])
+
+    total_assists = sum(player['assists'] for player in player_stats)
+    average_assists_per_player = total_assists / len(player_stats)
+
+    total_clean_sheets = sum(player['clean_sheets'] for player in player_stats)
+    average_clean_sheets_per_player = total_clean_sheets / len(player_stats)
+
+    total_yellow_cards = sum(player['yellow_cards'] for player in player_stats)
+    total_red_cards = sum(player['red_cards'] for player in player_stats)
+
+    print(f"Total goals scored in the Premier League: {total_goals}")
+    print(f"Average goals per player: {average_goals_per_player:.2f}")
+    print(f"Player with the most goals: {max_goals_player['player_name']} with {max_goals_player['goals_scored']} goals")
+    print(f"Player with the fewest goals: {min_goals_player['player_name']} with {min_goals_player['goals_scored']} goals")
+
+    print(f"\nTotal assists in the Premier League: {total_assists}")
+    print(f"Average assists per player: {average_assists_per_player:.2f}")
+
+    print(f"\nTotal clean sheets in the Premier League: {total_clean_sheets}")
+    print(f"Average clean sheets per player: {average_clean_sheets_per_player:.2f}")
+
+    print(f"\nTotal yellow cards in the Premier League: {total_yellow_cards}")
+    print(f"Total red cards in the Premier League: {total_red_cards}")
 
 if __name__ == "__main__":
     premier_league_stats = get_premier_league_stats()
 
     if premier_league_stats:
-        analyze_stats(premier_league_stats)
+        analyze_player_stats(premier_league_stats)
