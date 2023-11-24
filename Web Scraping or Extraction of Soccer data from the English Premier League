@@ -1,0 +1,38 @@
+# This program uses BeautifulSoup to extract data from the EPL Website
+
+import requests
+from bs4 import BeautifulSoup
+
+## Extract soccer stats from the English Premier League official player stats website
+def get_premier_league_stats():
+    url = "https://www.premierleague.com/stats"
+    response = requests.get(url)
+
+    if response.status_code == 200:
+        soup = BeautifulSoup(response.text, 'html.parser')
+        
+        player_stats = []
+        player_elements = soup.select('.statsTable tbody tr')
+        
+# Extract specific data for players and goals scored
+
+        for player_element in player_elements:
+            player_name = player_element.select_one('.playerName').text.strip()
+            goals_scored = player_element.select_one('.mainStat').text.strip()
+
+            player_stats.append({
+                'player_name': player_name,
+                'goals_scored': goals_scored
+            })
+
+        return player_stats
+    else:
+        print(f"Failed to retrieve data. Status code: {response.status_code}")
+        return None
+
+
+if __name__ == "__main__":
+    premier_league_stats = get_premier_league_stats()
+
+    if premier_league_stats:
+        analyze_stats(premier_league_stats)
