@@ -1,0 +1,90 @@
+# This code performs a goals analysis of the 2018 Football World Cup
+# We will extract data from a csv file containing all the goals scored during the world cup
+
+import time
+import csv
+# Function to read the CSV file and return a list of goals
+def read_goals_file(file_path): #File path will be specified later in program.
+    goals = []
+    with open(file_path, 'r') as file:
+        reader = csv.reader(file, delimiter=';')
+        for row in reader:
+            goals.append({
+                'player': row[0],
+                'country': row[1],
+                'time': int(row[2])
+                })
+    return goals
+
+# Function to calculate the total number of goals scored by a given country
+def total_goals_by_country(goals, country):
+    return sum(1 for goal in goals if goal['country'] == country)
+
+# Function to calculate the total number of goals scored by a given player
+def total_goals_by_player(goals, player):
+    return sum(1 for goal in goals if goal['player'] == player)
+
+# Function to list the names of all players who scored for a given country
+def players_for_country(goals, country):
+    return set(goal['player'] for goal in goals if goal['country'] == country)
+
+# Function to calculate the total number of goals by all countries
+def total_goals(goals):
+    return len(goals)
+
+# Function to calculate the total number of goals scored during the first half
+def goals_first_half(goals):
+    return sum(1 for goal in goals if goal['time'] <= 45)
+
+# Function to calculate the total number of goals scored during the second half
+def goals_second_half(goals):
+    return sum(1 for goal in goals if 45 < goal['time'] <= 90)
+
+# Function to calculate the total number of goals scored during extra time
+def goals_extra_time(goals):
+    return sum(1 for goal in goals if goal['time'] > 90)
+
+# Main function to display menu and perform analysis based on user input
+def main():
+    file_path = 'goals.csv'
+    goals = read_goals_file(file_path)
+
+    while True:
+        print("\nMenu:")
+        print("A: Total number of goals scored by a given country")
+        print("B: Total number of goals scored by a given player")
+        print("C: List the name of all the players who scored for a given country")
+        print("D: Total number of goals by all countries")
+        print("E: Total number of goals scored during the first half (45 minutes)")
+        print("F: Total number of goals scored during the second half (45 minutes to 90 minutes)")
+        print("G: Total number of goals scored during extra time (after 90 minutes of play)")
+        print("X: Exit")
+
+choice = input("Enter a choice from this menu: ").upper()
+
+        if choice == 'A':
+            country = input("Enter the country: ")
+            print(f"Total goals by {country}: {total_goals_by_country(goals, country)}")
+        elif choice == 'B':
+            player = input("Enter the player: ")
+            print(f"Total goals by {player}: {total_goals_by_player(goals, player)}")
+        elif choice == 'C':
+            country = input("Enter the country: ")
+            player_list = players_for_country(goals, country)
+            print(f"Players who scored for {country}: {', '.join(player_list)}")
+        elif choice == 'D':
+            print(f"Total number of goals by all countries: {total_goals(goals)}")
+        elif choice == 'E':
+            print(f"Total goals scored during the first half: {goals_first_half(goals)}")
+        elif choice == 'F':
+            print(f"Total goals scored during the second half: {goals_second_half(goals)}")
+        elif choice == 'G':
+            print(f"Total goals scored during extra time: {goals_extra_time(goals)}")
+        elif choice == 'X':
+            break
+        else:
+            print("Invalid choice. Please enter a valid option from the menu.")
+
+    if __name__ == "__main__":
+        main()  
+
